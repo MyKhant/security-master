@@ -13,33 +13,35 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-public class Customer {
+public class Employee {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
-    @NotBlank(message = "code cannot be blank.")
-    @Size(min = 2, max = 5, message = "code must be between 2 and 5.")
-    @Pattern(regexp = "[A-Za-z]*",message = "code cannot contains illegal characters.")
-    private String code;
     @NotBlank(message = "firstName cannot be empty.")
     @Pattern(regexp = "[A-Za-z-]*", message = "firstName cannot contains illegal characters.")
     private String firstName;
     @NotBlank(message = "lastName cannot be empty.")
     @Pattern(regexp = "[A-Za-z-]*", message = "lastName cannot contains illegal characters.")
     private String lastName;
+    @NotBlank(message = "phoneNumber cannot be empty.")
+    @Pattern(regexp = "[0-9\\-+]*", message = "phoneNumber cannot contains illegal characters.")
+    private String phoneNumber;
     @NotBlank(message = "address cannot be empty.")
-    @Pattern(regexp = "[\\w .\\-/,]*", message = "address cannot contains illegal characters.")
+    @Pattern(regexp = "[\\w -\\-/,]*", message = "address cannot contains illegal characters.")
     private String address;
+    @NotBlank(message = "cubicleNo cannot be blank.")
+    @Pattern(regexp = "[A-Za-z0-9\\-]*",message = "cubicleNo cannot contains illegal characters.")
+    private String cubicleNo;
 
-    public Customer(){
-
+    public Employee() {
     }
 
-    public Customer(String code, String firstName, String lastName, String address) {
-        this.code = code;
+    public Employee(String firstName, String lastName, String address, String phoneNumber, String cubicleNo) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
+        this.phoneNumber = phoneNumber;
+        this.cubicleNo = cubicleNo;
     }
 }
