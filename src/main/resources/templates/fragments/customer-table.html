@@ -2,9 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <body>
-
-</body>
-<div th:fragment="customerTable" class="table table-striped">
+<table th:fragment="customerTable" class="table table-striped">
     <thead class="thead-dark">
         <tr>
             <th>Id</th>
@@ -12,6 +10,7 @@
             <th>Last Name</th>
             <th>Code</th>
             <th>Address</th>
+            <th>Action</th>
         </tr>
     </thead>
     <tbody>
@@ -21,7 +20,10 @@
             <td th:text="${cus.lastName}"></td>
             <td th:text="${cus.code}"></td>
             <td th:text="${cus.address}"></td>
+            <td><a th:href="@{'/customer/customers/delete?id='+ ${cus.id}}"
+            class="btn btn-outline-danger">Delete</a></td>
         </tr>
     </tbody>
-</div>
+</table>
+</body>
 </html>

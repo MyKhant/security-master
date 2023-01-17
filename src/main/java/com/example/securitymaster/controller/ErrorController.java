@@ -15,11 +15,10 @@ public class ErrorController {
     @ExceptionHandler(Throwable.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public String handleErrors(Throwable throwable, Model model) throws Throwable{
-        logger.info(throwable.getCause().getMessage());
+//        logger.info(throwable.getCause().getMessage());
         String msg = throwable != null ? throwable.getMessage() : "unknown error.";
         model.addAttribute("errorMessage", msg);
         return "error";
-
 
     }
 }

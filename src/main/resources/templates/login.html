@@ -6,6 +6,11 @@
     <div class="container mt-5">
         <div class="row d-flex justify-content-center align-content-center">
             <div class="col">
+                <div th:if="${loginError}">
+                    <div class="alert alert-danger" role="alert">
+                        <h3>Invalid Username or Password</h3>
+                    </div>
+                </div>
                 <div class="card">
                     <div class="card-title">
                         <div class="card-header">

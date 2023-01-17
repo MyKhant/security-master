@@ -1,7 +1,10 @@
 package com.example.securitymaster.security.config;
 
+import jakarta.persistence.Access;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -11,11 +14,15 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler;
 
 import static com.example.securitymaster.security.SecurityRoles.*;
 
 @Configuration
 public class WevSecurityConfig {
+
+    @Autowired
+    private RoleHierarchy roleHierarchy;
 
     @Bean
     public UserDetailsService userDetailsService(){
@@ -57,14 +64,33 @@ public class WevSecurityConfig {
     }
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Throwable{
-        http.authorizeHttpRequests()
+        http.authorizeRequests()
+                .expressionHandler(expressionHandler())
                 .requestMatchers("/","/home","/bootstrap/**")
                 .permitAll()
+                .requestMatchers("/customer/**").hasRole(CUSTOMERS_PAG_VIEW)
+                .requestMatchers("/employee/**").hasRole(EMPLOYEES_PAG_VIEW)
                 .anyRequest()
-                .authenticated();
+                .authenticated()
+                .and()
+                .formLogin()
+                .loginPage("/login")
+                .failureUrl("/login-error")
+                .permitAll()
+                .and()
+                .logout()
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/logout")
+                .permitAll();
         return http.build();
     }
-
+    @Bean
+    public DefaultWebSecurityExpressionHandler expressionHandler(){
+        DefaultWebSecurityExpressionHandler handler =
+                new DefaultWebSecurityExpressionHandler();
+        handler.setRoleHierarchy(roleHierarchy);
+        return handler;
+    }
     @Bean
     public PasswordEncoder passwordEncoder(){
         return NoOpPasswordEncoder.getInstance();

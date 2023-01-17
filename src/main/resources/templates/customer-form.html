@@ -11,7 +11,7 @@
             <h3>Customer Form</h3>
           </div>
           <div class="card-body">
-            <form th:action="@{/customer-form}" th:object="${customer}" method="post">
+            <form th:action="@{/customer/customer-form}" th:object="${customer}" method="post">
               <div class="form-group">
                 <label for="firstName">First Name</label>
                 <input type="text" th:field="*{firstName}" id="firstName" class="form-control"
