@@ -1,14 +1,20 @@
 package com.example.securitymaster.security.config;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.web.SecurityFilterChain;
+
 import static com.example.securitymaster.security.SecurityRoles.*;
-@EnableMethodSecurity(securedEnabled = true)
+
+@Configuration
 public class WevSecurityConfig {
 
     @Bean
@@ -28,7 +34,7 @@ public class WevSecurityConfig {
 
         var william = User.withUsername("william")
                 .password("william")
-                .roles(EMPLOYEES_ADMIN,EMPLOYEES_CREATE,EMPLOYEES_READ,EMPLOYEES_PAG_VIEW)
+                .roles(DEPARTMENTS_ADMIN,DEPARTMENTS_CREATE,DEPARTMENTS_READ,DEPARTMENTS_PAG_VIEW)
                 .build();
 
         var lucas = User.withUsername("lucas")
@@ -48,6 +54,15 @@ public class WevSecurityConfig {
         uds.createUser(tom);
 
         return uds;
+    }
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Throwable{
+        http.authorizeHttpRequests()
+                .requestMatchers("/","/home","/bootstrap/**")
+                .permitAll()
+                .anyRequest()
+                .authenticated();
+        return http.build();
     }
 
     @Bean
