@@ -22,10 +22,10 @@
                     <a th:href="@{/customer/customers}" class="nav-link">Customers</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">Employees</a>
+                    <a th:href="@{/employee/employees}" class="nav-link">Employees</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">Departments</a>
+                    <a th:href="@{/department/departments}" class="nav-link">Departments</a>
                 </li>
             </ul>
             <div sec:authorize="!isAuthenticated()">

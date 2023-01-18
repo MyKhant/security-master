@@ -5,8 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
-import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -70,6 +68,7 @@ public class WevSecurityConfig {
                 .permitAll()
                 .requestMatchers("/customer/**").hasRole(CUSTOMERS_PAG_VIEW)
                 .requestMatchers("/employee/**").hasRole(EMPLOYEES_PAG_VIEW)
+                .requestMatchers("/department/**").hasRole(DEPARTMENTS_PAG_VIEW)
                 .anyRequest()
                 .authenticated()
                 .and()
