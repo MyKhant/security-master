@@ -39,7 +39,7 @@ public class WevSecurityConfig {
 
         var william = User.withUsername("william")
                 .password("william")
-                .roles(DEPARTMENTS_ADMIN,DEPARTMENTS_CREATE,DEPARTMENTS_READ,DEPARTMENTS_PAG_VIEW)
+                .roles(DEPARTMENTS_CREATE,DEPARTMENTS_READ,DEPARTMENTS_PAG_VIEW)
                 .build();
 
         var lucas = User.withUsername("lucas")
@@ -64,11 +64,11 @@ public class WevSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Throwable{
         http.authorizeRequests()
                 .expressionHandler(expressionHandler())
-                .requestMatchers("/","/home","/bootstrap/**")
+                .requestMatchers("/","/home","/bootstrap/**","/error/**")
                 .permitAll()
-                .requestMatchers("/customer/**").hasRole(CUSTOMERS_PAG_VIEW)
-                .requestMatchers("/employee/**").hasRole(EMPLOYEES_PAG_VIEW)
-                .requestMatchers("/department/**").hasRole(DEPARTMENTS_PAG_VIEW)
+//                .requestMatchers("/customer/**").hasRole(CUSTOMERS_PAG_VIEW)
+//                .requestMatchers("/employee/**").hasRole(EMPLOYEES_PAG_VIEW)
+//                .requestMatchers("/department/**").hasRole(DEPARTMENTS_PAG_VIEW)
                 .anyRequest()
                 .authenticated()
                 .and()
